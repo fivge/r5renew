@@ -1,0 +1,136 @@
+@client_id = 
+@client_secret = 
+@tenantId = 
+@userId = 
+# 从接口获取
+@token = 
+@siteId = 
+@calendarGroupId = 
+
+### token
+POST https://login.microsoftonline.com/{{tenantId}}/oauth2/v2.0/token HTTP/1.1
+Host: login.microsoftonline.com
+Content-Type: application/x-www-form-urlencoded
+
+client_id={{client_id}}
+&scope=https%3A%2F%2Fgraph.microsoft.com%2F.default
+&client_secret={{client_secret}}
+&grant_type=client_credentials
+
+
+
+### 用户列表
+# https://learn.microsoft.com/zh-cn/graph/api/user-list?view=graph-rest-1.0&tabs=http
+###
+GET https://graph.microsoft.com/v1.0/users
+content-type: application/json
+Authorization: Bearer {{token}}
+
+### 用户信息
+GET https://graph.microsoft.com/v1.0/users/{{userId}}
+content-type: application/json
+Authorization: Bearer {{token}}
+
+
+
+
+###### dirvers
+# https://learn.microsoft.com/zh-cn/graph/api/drive-get?view=graph-rest-1.0&tabs=http
+
+###
+GET https://graph.microsoft.com/v1.0/{{userId}}/drive
+content-type: application/json
+Authorization: Bearer {{token}}
+
+### ?
+GET https://graph.microsoft.com/v1.0/{{userId}}/drive/recent
+content-type: application/json
+Authorization: Bearer {{token}}
+
+
+
+# sites
+###
+GET https://graph.microsoft.com/v1.0/sites/root
+content-type: application/json
+Authorization: Bearer {{token}}
+
+###
+GET https://graph.microsoft.com/v1.0/sites/{{siteId}}
+content-type: application/json
+Authorization: Bearer {{token}}
+
+
+
+###### calendars
+
+###
+GET https://graph.microsoft.com/v1.0/users/{{userId}}/calendars
+content-type: application/json
+Authorization: Bearer {{token}}
+
+### 不使用
+POST https://graph.microsoft.com/v1.0/users/{{userId}}/calendars
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Volunteer"
+}
+
+###
+GET https://graph.microsoft.com/v1.0/users/{{userId}}/calendarGroups
+content-type: application/json
+Authorization: Bearer {{token}}
+
+
+### 不使用
+POST https://graph.microsoft.com/v1.0/users/{{userId}}/calendarGroups
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Personal events"
+}
+
+###
+GET https://graph.microsoft.com/v1.0/users/{{userId}}/calendarGroups/{{calendarGroupId}}/calendars
+content-type: application/json
+Authorization: Bearer {{token}}
+
+###
+GET https://graph.microsoft.com/v1.0/users/{{userId}}/calendarView?startDateTime=2022-01-01T19:00:00-08:00&endDateTime=2025-01-02T19:00:00-08:00
+content-type: application/json
+Authorization: Bearer {{token}}
+
+
+
+# events
+###
+GET https://graph.microsoft.com/v1.0/users/{{userId}}/events
+content-type: application/json
+Authorization: Bearer {{token}}
+
+###
+GET https://graph.microsoft.com/v1.0/users/{{userId}}/calendar/events
+content-type: application/json
+Authorization: Bearer {{token}}
+
+
+
+# photo
+###
+GET https://graph.microsoft.com/v1.0/users/{{userId}}/photo/$value
+content-type: application/json
+Authorization: Bearer {{token}}
+
+###
+GET https://graph.microsoft.com/v1.0/users/{{userId}}/photo
+content-type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+GET https://graph.microsoft.com/v1.0/users/{{userId}}/contacts
+content-type: application/json
+Authorization: Bearer {{token}}
